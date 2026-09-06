@@ -13,13 +13,10 @@
     h1,h2,h3{font-family:'Fraunces', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; letter-spacing:.2px}
     html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:#ffffff}
     html{scroll-behavior:smooth}
-
     /* Link biasa tetap underline saat hover; tombol & icon bukan targetnya */
     a{color:var(--acc);text-decoration:none}
     a:not(.btn):not(.icon-btn):hover{text-decoration:underline}
-
     .container{max-width:1080px;margin:0 auto;padding:0 20px}
-
     header{
       position:sticky;top:0;background:rgba(255,255,255,.9);
       backdrop-filter:saturate(180%) blur(8px);z-index:20;
@@ -27,11 +24,9 @@
       transition:box-shadow .2s ease, border-color .2s ease;
     }
     header.scrolled{ box-shadow:0 6px 18px rgba(2,6,23,.06); border-color:transparent; }
-
     .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .nav a.logo{font-weight:800;letter-spacing:.3px}
     .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
-
     /* Navbar link style */
     .nav ul li a{
       font-weight:400; font-size:.95rem; transition:all .2s ease;
@@ -41,7 +36,6 @@
       font-weight:700; font-size:1.05rem; color:var(--acc);
       transform:translateY(-1px); text-decoration:none;
     }
-
     /* ===== Hero ===== */
     .hero{
       padding:96px 20px 64px;
@@ -50,14 +44,11 @@
     .hero h1{ font-size:clamp(28px, 3.2vw + 8px, 44px); line-height:1.15; margin-bottom:6px }
     .hero-wrap{ display:grid; gap:56px; align-items:center }
     @media(min-width:1000px){ .hero-wrap{ grid-template-columns:300px 1fr } }
-
     .avatar{justify-self:center;width:220px;height:220px;border-radius:9999px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 12px 30px rgba(2,6,23,.08)}
     .avatar img{width:100%;height:100%;object-fit:cover}
     .contact-card{margin:28px auto 18px;max-width:320px;padding:22px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .contact-card h3{ font-size:clamp(18px, 1.1vw + 12px, 22px); line-height:1.2; margin:0 0 8px }
-
     .hero p{ max-width:68ch; line-height:1.65 }
-
     /* Ikon bulat */
     :root{ --icon-size: clamp(48px, 3.2vw, 64px); --icon-glyph: calc(var(--icon-size) * .52) }
     .icon-row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:20px }
@@ -72,20 +63,16 @@
     .icon-btn svg{ width:var(--icon-glyph); height:var(--icon-glyph); color:#334155 }
     .icon-btn[data-brand="github"]:hover svg{ color:#0f172a }
     .icon-btn[data-brand="linkedin"]:hover svg{ color:#0a66c2 }
-
     .section{padding:64px 0}
     .section h2{font-size:26px;margin:8px 0 24px;position:relative;display:inline-block}
     .section h2:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:rgba(2,6,23,.08)}
-
     .card{background:#ffffff;border:1px solid rgba(2,6,23,.06);border-radius:16px;padding:18px;transition:transform .2s ease, box-shadow .2s ease}
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(2,6,23,.10)}
     .card h3{margin:8px 0 6px;font-size:16px}
     .card p{margin:0 0 10px;color:#334155;font-size:14px}
     .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
     .tag{font-size:11px;padding:6px 8px;border-radius:999px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155}
-
     .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-
     .btn{
       display:inline-flex;align-items:center;gap:8px;padding:10px 14px;
       border-radius:12px;border:1px solid rgba(2,6,23,.08);
@@ -94,27 +81,21 @@
       transition:filter .15s ease, transform .15s ease;
     }
     .btn:hover{filter:brightness(1.02);transform:translateY(-1px)}
-
     /* Aksesibilitas: fokus keyboard pada tombol & icon */
     .btn:focus-visible,
     .icon-btn:focus-visible{
       outline:var(--ring);
       text-decoration:none;
     }
-
     .panel{background:#ffffff;border:1px solid rgba(2,6,23,.06);border-radius:16px;padding:20px}
     .muted{color:#475569}
     .footer{padding:30px 0;color:#475569;border-top:1px solid rgba(2,6,23,.06);margin-top:40px}
-
     .grid-projects{display:grid;gap:20px}
     @media(min-width:768px){.grid-projects{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1100px){.grid-projects{grid-template-columns:repeat(3,1fr)}}
-
     .thumb{width:100%;border-radius:12px;overflow:hidden;background:#f1f5f9;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9}
     .thumb img{width:100%;height:100%;object-fit:cover}
-
     .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 8px;position:relative;z-index:3}
-
     .filter-chip{
       padding:8px 12px;border-radius:999px;
       border:1px solid #e2e8f0;background:#fff;color:#0f172a;
@@ -133,18 +114,15 @@
       box-shadow:0 6px 16px rgba(14,165,233,.25);
     }
     .filter-chip.active:hover{ transform:none }
-
     .searchbox{display:flex;gap:8px;align-items:center;flex-basis:100%;margin-bottom:16px}
     .searchbox input{border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;width:260px}
     .hidden-card{display:none !important}
-
     .empty-state{padding:24px;border:1px dashed #e2e8f0;border-radius:12px;color:#64748b;text-align:center}
     .hidden{display:none}
     @media (prefers-reduced-motion: reduce){
       *{ transition:none !important }
       .card:hover, .icon-btn:hover{ transform:none !important }
     }
-
     /* ===== WIP MODAL ===== */
     .modal-overlay{
       position:fixed; inset:0; background:rgba(2,6,23,.55);
@@ -152,7 +130,6 @@
       z-index:50; padding:20px;
     }
     .modal-overlay.show{ display:flex; }
-
     .modal{
       width:min(640px, 96vw); background:#fff; border-radius:16px;
       border:1px solid rgba(2,6,23,.08); box-shadow:0 24px 60px rgba(2,6,23,.35);
@@ -160,7 +137,6 @@
       transition:transform .18s ease, opacity .18s ease;
     }
     .modal-overlay.show .modal{ transform:none; opacity:1; }
-
     .modal-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 18px; border-bottom:1px solid #eef2f7;
@@ -171,7 +147,6 @@
       border-radius:8px; padding:6px;
     }
     .modal-close:hover{ background:#f1f5f9; }
-
     .modal-body{ padding:16px 18px; }
     .modal-hero{
       width:100%; aspect-ratio: 16/9; border-radius:12px; overflow:hidden;
@@ -179,7 +154,6 @@
       display:flex; align-items:center; justify-content:center;
     }
     .modal-hero img{ width:100%; height:100%; object-fit:cover; }
-
     .modal-text{ color:#334155; line-height:1.6 }
     .modal-actions{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap }
     .modal-actions .btn{ font-weight:700 }
@@ -197,7 +171,6 @@
       </ul>
     </div>
   </header>
-
   <main class="container">
     <section class="hero">
       <div class="hero-wrap">
@@ -228,7 +201,7 @@
           <h3 style="margin:0 0 14px;font-weight:600;color:#1f2937">Data Scientist & Data Analyst</h3>
           <p>5th-semester Data Science student at Bina Nusantara University (BINUS University). I’m passionate about working with data—exploring it, building models, and translating insights into meaningful outcomes. Interested in machine learning, SQL, and deep learning. Currently also learning text mining, NLP, Power BI, and prescriptive analytics.</p>
           <div class="icon-row">
-            <a class="icon-btn" data-brand="github" href="https://github.com/KamigonNoMercy" target="_blank" aria-label="GitHub" title="GitHub">
+            <a class="icon-btn" data-brand="github" href="https://github.com/SuryaDharmaPutraDS" target="_blank" aria-label="GitHub" title="GitHub">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.87 1.26 1.87 1.26 1.08 1.86 2.84 1.32 3.53 1.01.11-.8.42-1.32.77-1.62-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
             </a>
             <a class="icon-btn" data-brand="linkedin" href="https://www.linkedin.com/in/surya-dharma-putra-54b43b1bb/" target="_blank" aria-label="LinkedIn" title="LinkedIn">
@@ -244,14 +217,12 @@
         </div>
       </div>
     </section>
-
     <section id="about" class="section">
       <h2>About</h2>
       <div class="panel">
         <p>I like finding patterns in data and turning them into clear visuals and usable tools. Right now I'm learning and building around <strong>text mining</strong> and <strong>NLP</strong>, while improving my <strong>Power BI</strong> and <strong>prescriptive analytics</strong> skills. I enjoy practical projects where models and insights are easy to explain and demo.</p>
       </div>
     </section>
-
     <section id="skills" class="section" style="background:var(--bg2);border-top:1px solid rgba(2,6,23,.06);border-bottom:1px solid rgba(2,6,23,.06)">
       <div class="container">
         <h2 class="block text-center">Skills</h2>
@@ -284,10 +255,8 @@
         </div>
       </div>
     </section>
-
     <section id="projects" class="section">
       <h2 class="block text-center">Projects</h2>
-
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="filter-bar" id="filterBar">
           <button type="button" class="filter-chip active" data-filter="all">All</button>
@@ -313,72 +282,63 @@
           <input id="projectSearch" type="search" placeholder="Search projects... (e.g. 'loan', 'yolo', 'nlp')"/>
         </div>
       </div>
-
       <div class="grid-projects" id="projectGrid">
         <div class="card project-card" data-tags="yolo, dl, opencv, huggingface, pytorch" data-title="viadv2-yolov11">
           <div class="thumb"><img src="./assets/viadv2.jpg" alt="viadv2-yolov11 thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>viadv2-yolov11</h3>
           <p>YOLOv11 object detection on ViadV2 dataset.</p>
           <div class="tags"><span class='tag'>MIT</span><span class='tag'>YOLO</span><span class='tag'>HuggingFace</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/viadv2-yolov11" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/viadv2-yolov11" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="yolo, dl, opencv, ppe, huggingface, pytorch" data-title="sh17-yolov11">
           <div class="thumb"><img src="./assets/sh17.jpg" alt="sh17-yolov11 thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>sh17-yolov11</h3>
           <p>YOLOv11 PPE detection (SH17 dataset).</p>
           <div class="tags"><span class='tag'>MIT</span><span class='tag'>YOLO</span><span class='tag'>PPE</span><span class='tag'>HuggingFace</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/sh17-yolov11-streamlit" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/sh17-yolov11-streamlit" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="dl, gan, pytorch" data-title="pistachio-gan-pytorch">
           <div class="thumb"><img src="./assets/pistachio-gan.jpg" alt="pistachio-gan thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>pistachio-gan-pytorch</h3>
           <p>Generative Adversarial Network on Pistachio dataset.</p>
           <div class="tags"><span class='tag'>PyTorch</span><span class='tag'>GAN</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/pistachio-gan-pytorch" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/pistachio-gan-pytorch" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="dl, keras, autoencoder" data-title="pistachio-autoencoder-keras">
           <div class="thumb"><img src="./assets/pistachio-autoencoder.jpg" alt="pistachio-autoencoder thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>pistachio-autoencoder-keras</h3>
           <p>Autoencoder anomaly detection for Pistachio defects.</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>Autoencoder</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/pistachio-autoencoder-keras" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/pistachio-autoencoder-keras" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="classic-ml, keras, ann, forecasting, regression, reports" data-title="energy-consumption-forecasting-keras">
           <div class="thumb"><img src="./assets/energy-keras.jpg" alt="energy-consumption-forecasting-keras thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>energy-consumption-forecasting-keras</h3>
           <p>Energy consumption forecasting (ANN, Keras).</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>ANN</span><span class='tag'>Forecasting</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/energy-consumption-forecasting-keras" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/energy-consumption-forecasting-keras" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="keras, lstm, forecasting, regression" data-title="air-quality-lstm-forecasting-keras">
           <div class="thumb"><img src="./assets/air-quality-lstm.jpg" alt="air-quality-lstm thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>air-quality-lstm-forecasting-keras</h3>
           <p>Air quality time-series forecasting with LSTM (Keras).</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>LSTM</span><span class='tag'>Forecasting</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/air-quality-lstm-forecasting-keras" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/air-quality-lstm-forecasting-keras" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="app, classic-ml, sklearn" data-title="loan-approval-ml-app">
           <div class="thumb"><img src="./assets/loan-app.jpg" alt="loan-approval-ml-app thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>loan-approval-ml-app</h3>
           <p>Loan approval prediction — classic ML app.</p>
           <div class="tags"><span class='tag'>Scikit-learn</span><span class='tag'>App</span><span class='tag'>Classic ML</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/loan-approval-ml-app" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/loan-approval-ml-app" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="dl, cnn, pytorch" data-title="brain-tumor-mri-alexnet">
           <div class="thumb"><img src="./assets/brain-tumor.jpg" alt="brain-tumor-mri-alexnet thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>brain-tumor-mri-alexnet</h3>
           <p>MRI brain tumor classification using AlexNet-style CNN.</p>
           <div class="tags"><span class='tag'>PyTorch</span><span class='tag'>CNN</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/brain-tumor-mri-alexnet" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/brain-tumor-mri-alexnet" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="classic-ml, reports, recommender-system" data-title="movie-recommender-system">
           <div class="thumb"><img src="./assets/movie-recommender.jpg" alt="movie-recommender-system thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>Movie Recommender System</h3>
@@ -389,30 +349,26 @@
             <span class='tag'>Recommender System</span>
           </div>
           <div class="cta-row">
-            <a class="btn" href="https://github.com/KamigonNoMercy/movie-recommender-system" target="_blank">View on GitHub</a>
+            <a class="btn" href="https://github.com/SuryaDharmaPutraDS/movie-recommender-system" target="_blank">View on GitHub</a>
           </div>
         </div>
-
         <div class="card project-card" data-tags="dl, cnn, pytorch, in-progress" data-title="csrnet-crowd-counting">
           <div class="thumb"><img src="./assets/wip.jpg" alt="csrnet-crowd-counting thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>csrnet-crowd-counting</h3>
           <p>CSRNet-style crowd counting model (in progress).</p>
           <div class="tags"><span class='tag'>PyTorch</span><span class='tag'>CNN</span><span class='tag'>In Progress</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/csrnet-crowd-counting" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/csrnet-crowd-counting" target="_blank">View on GitHub</a></div>
         </div>
-
         <div class="card project-card" data-tags="nlp, text-mining, in-progress" data-title="anime-reviews-text-mining-2020-2024">
           <div class="thumb"><img src="./assets/wip.jpg" alt="anime-reviews-text-mining thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>anime-reviews-text-mining-2020-2024</h3>
           <p>Jikan v4 reviews mining & summarization (in progress).</p>
           <div class="tags"><span class='tag'>NLP</span><span class='tag'>Text Mining</span><span class='tag'>In Progress</span></div>
-          <div class="cta-row"><a class="btn" href="https://github.com/KamigonNoMercy/anime-reviews-text-mining-2020-2024" target="_blank">View on GitHub</a></div>
+          <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/anime-reviews-text-mining-2020-2024" target="_blank">View on GitHub</a></div>
         </div>
       </div>
-
       <div id="noResults" class="empty-state hidden">No projects match your filter/search.</div>
     </section>
-
     <section id="contact" class="section">
       <h2 class="block text-center">Contact</h2>
       <div class="panel max-w-xl mx-auto text-center" id="contactPanel">
@@ -433,12 +389,10 @@
         </div>
       </div>
     </section>
-
     <footer class="footer">
       <div class="container">© <span id="year"></span> Surya Dharma Putra. All rights reserved.</div>
     </footer>
   </main>
-
   <!-- ===== WIP Modal ===== -->
   <div id="wipOverlay" class="modal-overlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wipTitle">
@@ -465,16 +419,13 @@
       </div>
     </div>
   </div>
-
   <script>
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
-
     // Header shadow on scroll
     const headerEl = document.querySelector('header');
     function setHeaderShadow(){ headerEl.classList.toggle('scrolled', window.scrollY > 8); }
     window.addEventListener('scroll', setHeaderShadow, {passive:true}); setHeaderShadow();
-
     // Filtering + Search
     const filterBar = document.getElementById('filterBar');
     const chips = Array.from(filterBar.querySelectorAll('.filter-chip'));
@@ -482,13 +433,10 @@
     const cards = Array.from(grid.querySelectorAll('.project-card'));
     const search = document.getElementById('projectSearch');
     const emptyState = document.getElementById('noResults');
-
     let activeFilter = 'all';
-
     function normalizeTags(raw){
       return (raw || '').toLowerCase().split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
     }
-
     function applyFilters(){
       const q = (search && search.value ? search.value : '').trim().toLowerCase();
       let visible = 0;
@@ -504,7 +452,6 @@
       });
       emptyState.classList.toggle('hidden', visible > 0);
     }
-
     filterBar.addEventListener('click', (e) => {
       const btn = e.target.closest('.filter-chip');
       if(!btn) return;
@@ -514,29 +461,23 @@
       activeFilter = (btn.dataset.filter || 'all').toLowerCase();
       applyFilters();
     });
-
     if (search) search.addEventListener('input', applyFilters);
-
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', applyFilters);
     } else {
       applyFilters();
     }
-
     // Navbar active state
     const navLinks = Array.from(document.querySelectorAll('.nav ul li a'));
     const sections = ['about','skills','projects','contact'].map(id => document.getElementById(id)).filter(Boolean);
-
     function setActiveLinkByHash(hash){
       navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
     }
-
     navLinks.forEach(a=>{
       a.addEventListener('click', ()=>{
         setActiveLinkByHash(a.getAttribute('href'));
       });
     });
-
     function handleScrollActive(){
       const scrollY = window.pageYOffset;
       let currentId = null;
@@ -555,12 +496,10 @@
     }
     window.addEventListener('scroll', handleScrollActive, {passive:true});
     handleScrollActive();
-
     // ===== WIP MODAL JS =====
     const wipOverlay = document.getElementById('wipOverlay');
     const wipCloseBtn = document.getElementById('wipCloseBtn');
     const wipCloseIcon = wipOverlay.querySelector('.modal-close');
-
     function isInProgress(card){
       const tags = (card?.dataset.tags || '').toLowerCase();
       return tags.split(/[\s,]+/).includes('in-progress');
@@ -578,7 +517,6 @@
     wipCloseIcon.addEventListener('click', closeWipModal);
     wipOverlay.addEventListener('click', (e)=>{ if(e.target === wipOverlay) closeWipModal(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeWipModal(); });
-
     // Intercept tombol pada kartu "in-progress"
     document.addEventListener('click', (e)=>{
       const btn = e.target.closest('.project-card .btn');
