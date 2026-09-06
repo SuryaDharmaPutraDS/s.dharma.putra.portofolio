@@ -2,7 +2,7 @@
 
 Personal data science & analytics portfolio.
 
-**🌐 Live:** https://kamigonnomercy.github.io/s.dharma.putra.portofolio
+**🌐 Live:** https://SuryaDharmaPutraDS.github.io/s.dharma.putra.portofolio
 
 ---
 
@@ -25,7 +25,7 @@ Personal data science & analytics portfolio.
 
 ## Deployment (GitHub Pages)
 - Source: **main** branch, root folder  
-- URL: `https://kamigonnomercy.github.io/s.dharma.putra.portofolio/`  
+- URL: `https://SuryaDharmaPutraDS.github.io/s.dharma.putra.portofolio/`  
 - Custom 404 sudah disiapkan (`404.html`)
 
 ## Resume
