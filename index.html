@@ -13,8 +13,8 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Surya Dharma Putra — Data Analyst & Scientist</title>
-  <meta name="description" content="Portfolio of Surya Dharma Putra — Data Analyst & Scientist. Computer vision, deep learning, forecasting, classic ML." />
+  <title>Surya Dharma Putra — Data Analyst, Data Engineer, Data Scientist</title>
+  <meta name="description" content="Portfolio of Surya Dharma Putra — Data Analyst, Data Engineer, Data Scientist. Computer vision, deep learning, forecasting, classic ML." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,7 @@
     .container{max-width:1080px;margin:0 auto;padding:0 20px}
     header{position:sticky;top:0;background:var(--header-bg);backdrop-filter:saturate(180%) blur(8px);z-index:20;border-bottom:1px solid var(--border);transition:box-shadow .2s ease, border-color .2s ease, background .25s ease;}
     header.scrolled{ box-shadow:0 6px 18px rgba(2,6,23,.06); border-color:transparent; }
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px}
     .nav a.logo{font-weight:800;letter-spacing:.3px}
     .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
     .nav ul li a{font-weight:400; font-size:.95rem; transition:all .2s ease;padding:.25rem .125rem; display:inline-block; text-decoration:none;}
@@ -53,6 +53,31 @@
     .theme-toggle:hover{transform:translateY(-1px)}
     .theme-toggle svg{width:18px;height:18px}
     .theme-toggle:focus-visible{outline:var(--ring)}
+    .menu-toggle{display:none;width:38px;height:38px;border-radius:9999px;border:1px solid var(--border);background:var(--card);align-items:center;justify-content:center;cursor:pointer;color:var(--text);flex-shrink:0;}
+    .menu-toggle svg{width:20px;height:20px}
+    .menu-toggle:focus-visible{outline:var(--ring)}
+    @media (max-width:700px){
+      .menu-toggle{display:inline-flex}
+      .nav ul{
+        position:absolute;
+        left:0;right:0;top:100%;
+        flex-direction:column;
+        gap:0;
+        background:var(--header-bg);
+        backdrop-filter:saturate(180%) blur(8px);
+        border-bottom:1px solid var(--border);
+        padding:0 20px;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .25s ease, padding .25s ease;
+      }
+      .nav ul.open{
+        max-height:320px;
+        padding:12px 20px 20px;
+      }
+      .nav ul li{width:100%}
+      .nav ul li a{display:block;padding:10px 0;font-size:1rem}
+    }
     .hero{padding:96px 20px 64px;background:linear-gradient(90deg,#eef6ff,#f4efff);position:relative;overflow:hidden;}
     .hero::before,.hero::after{content:"";position:absolute;border-radius:9999px;filter:blur(60px);opacity:.55;z-index:0;pointer-events:none;}
     .hero::before{width:320px;height:320px;background:radial-gradient(circle,#93c5fd,transparent 70%);top:-80px;left:-60px;}
@@ -131,7 +156,7 @@
     .hidden-card{display:none !important}
     .empty-state{padding:24px;border:1px dashed var(--border);border-radius:12px;color:var(--muted);text-align:center}
     .hidden{display:none}
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease;}
+    .reveal{opacity:0;transition:opacity .6s ease;}
     .reveal.is-visible{opacity:1;transform:none;}
     .modal-overlay{position:fixed; inset:0; background:rgba(2,6,23,.55);display:none; align-items:center; justify-content:center;z-index:50; padding:20px;}
     .modal-overlay.show{ display:flex; }
@@ -153,8 +178,8 @@
   <header>
     <div class="container nav">
       <a class="logo" href="#">SURYA</a>
-      <div style="display:flex;align-items:center;gap:18px">
-        <ul>
+      <div style="display:flex;align-items:center;gap:12px">
+        <ul id="navLinks">
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
@@ -163,6 +188,9 @@
         <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
           <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </div>
@@ -200,8 +228,8 @@
         </aside>
         <div>
           <h1>Surya Dharma Putra</h1>
-          <h3 style="margin:0 0 14px;font-weight:600">Data Scientist & Data Analyst</h3>
-          <p><p>I’m a sixth-semester Data Science student at Bina Nusantara University (BINUS University). I love working with data, from exploration to modeling, and turning insights into real outcomes. I have hands-on experience with machine learning, deep learning, SQL, Excel, and Power BI, while building projects across computer vision, forecasting, NLP, and LLMs. I’m currently seeking internship opportunities where I can keep learning and contribute through practical data projects.</p></p>
+          <h3 style="margin:0 0 14px;font-weight:600">Data Analyst, Data Engineer & Data Scientist</h3>
+          <p><p>I’m a sixth-semester Data Science student at Bina Nusantara University (BINUS University). I love working with data, from exploration to modeling, and turning insights into real outcomes. I have hands-on experience with machine learning, deep learning, SQL, Excel, and Power BI, while building projects across computer vision, forecasting, NLP, and LLMs. I also work with ETL/ELT pipelines to extract, transform, and load data from various sources into clean, analysis-ready datasets. I’m currently seeking internship opportunities where I can keep learning and contribute through practical data projects.</p></p>
           <div class="icon-row">
             <a class="icon-btn" data-brand="github" href="https://github.com/SuryaDharmaPutraDS" target="_blank" aria-label="GitHub" title="GitHub">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.75.08-.73.08-.73 1.22.09 1.87 1.26 1.87 1.26 1.08 1.86 2.84 1.32 3.53 1.01.11-.8.42-1.32.77-1.62-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.44 11.44 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
@@ -612,7 +640,19 @@
     const navLinks = Array.from(document.querySelectorAll('.nav ul li a'));
     const sections = ['about','skills','projects','contact'].map(id => document.getElementById(id)).filter(Boolean);
     function setActiveLinkByHash(hash){ navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash)); }
-    navLinks.forEach(a=>{ a.addEventListener('click', ()=>{ setActiveLinkByHash(a.getAttribute('href')); }); });
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinksEl = document.getElementById('navLinks');
+    function closeMobileMenu(){
+      if(navLinksEl) navLinksEl.classList.remove('open');
+      if(menuToggle) menuToggle.setAttribute('aria-expanded','false');
+    }
+    if(menuToggle && navLinksEl){
+      menuToggle.addEventListener('click', () => {
+        const isOpen = navLinksEl.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+    navLinks.forEach(a=>{ a.addEventListener('click', ()=>{ setActiveLinkByHash(a.getAttribute('href')); closeMobileMenu(); }); });
     function handleScrollActive(){
       const scrollY = window.pageYOffset;
       let currentId = null;
