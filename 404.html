@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function(){
+      try{
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = stored ? stored === 'dark' : prefersDark;
+        if(isDark) document.documentElement.classList.add('dark');
+      }catch(e){}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Page Not Found — Surya Dharma Putra</title>
@@ -8,27 +18,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--acc:#2563eb;--ring:0 0 0 3px rgba(37,99,235,.25)}
+    :root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--acc:#2563eb;--ring:0 0 0 3px rgba(37,99,235,.25);--card:#ffffff;--border:rgba(2,6,23,.06);--hero-a:#eef6ff;--hero-b:#f4efff}
+    html.dark{--bg:#0b1220;--text:#e2e8f0;--muted:#94a3b8;--acc:#60a5fa;--ring:0 0 0 3px rgba(96,165,250,.35);--card:#111827;--border:rgba(255,255,255,.1);--hero-a:#0b1220;--hero-b:#1e1b4b}
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
     body{
       font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       color:var(--text);
-      background:linear-gradient(90deg,#eef6ff,#f4efff);
+      background:linear-gradient(90deg,var(--hero-a),var(--hero-b));
       display:flex;
       align-items:center;
       justify-content:center;
       padding:24px;
+      transition:background .25s ease, color .25s ease;
     }
     .card{
       max-width:480px;
       width:100%;
-      background:#ffffff;
-      border:1px solid rgba(2,6,23,.06);
+      background:var(--card);
+      border:1px solid var(--border);
       border-radius:20px;
       box-shadow:0 24px 60px rgba(2,6,23,.10);
       padding:40px 32px;
       text-align:center;
+      transition:background .25s ease, border-color .25s ease;
     }
     .code{
       font-family:'Fraunces', Inter, serif;

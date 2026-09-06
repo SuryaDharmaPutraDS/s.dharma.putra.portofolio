@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function(){
+      try{
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = stored ? stored === 'dark' : prefersDark;
+        if(isDark) document.documentElement.classList.add('dark');
+      }catch(e){}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Surya Dharma Putra — Data Analyst & Scientist</title>
@@ -9,83 +19,132 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{--bg:#ffffff;--bg2:#f8fafc;--card:#ffffff;--muted:#475569;--text:#0f172a;--acc:#2563eb;--acc2:#22c55e;--ring:0 0 0 3px rgba(37,99,235,.25)}
+    :root{--bg:#ffffff;--bg2:#f8fafc;--card:#ffffff;--muted:#475569;--text:#0f172a;--acc:#2563eb;--acc2:#22c55e;--ring:0 0 0 3px rgba(37,99,235,.25);--border:#e2e8f0;--header-bg:rgba(255,255,255,.9)}
+    html.dark{
+      --bg:#0b1220;
+      --bg2:#111827;
+      --card:#111827;
+      --muted:#94a3b8;
+      --text:#e2e8f0;
+      --acc:#60a5fa;
+      --acc2:#34d399;
+      --ring:0 0 0 3px rgba(96,165,250,.35);
+      --border:rgba(255,255,255,.1);
+      --header-bg:rgba(15,23,42,.85);
+    }
+    html.dark svg path[stroke="#0f172a"]{stroke:#e2e8f0}
+    html.dark .icon-btn svg{color:#cbd5e1}
+    html.dark .icon-btn[data-brand="github"]:hover svg{color:#f8fafc}
+    html.dark .hero{background:linear-gradient(90deg,#0b1220,#1e1b4b);}
     h1,h2,h3{font-family:'Fraunces', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; letter-spacing:.2px}
-    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:#ffffff}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg);transition:background .25s ease, color .25s ease}
     html{scroll-behavior:smooth}
     a{color:var(--acc);text-decoration:none}
     a:not(.btn):not(.icon-btn):hover{text-decoration:underline}
     .container{max-width:1080px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(8px);z-index:20;border-bottom:1px solid rgba(15,23,42,.06);transition:box-shadow .2s ease, border-color .2s ease;}
+    header{position:sticky;top:0;background:var(--header-bg);backdrop-filter:saturate(180%) blur(8px);z-index:20;border-bottom:1px solid var(--border);transition:box-shadow .2s ease, border-color .2s ease, background .25s ease;}
     header.scrolled{ box-shadow:0 6px 18px rgba(2,6,23,.06); border-color:transparent; }
     .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .nav a.logo{font-weight:800;letter-spacing:.3px}
     .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
     .nav ul li a{font-weight:400; font-size:.95rem; transition:all .2s ease;padding:.25rem .125rem; display:inline-block; text-decoration:none;}
     .nav ul li a:hover{font-weight:700; font-size:1.05rem; color:var(--acc);transform:translateY(-1px); text-decoration:none;}
-    .hero{padding:96px 20px 64px;background:linear-gradient(90deg,#eef6ff,#f4efff);}
+    .theme-toggle{width:38px;height:38px;border-radius:9999px;border:1px solid var(--border);background:var(--card);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease, border-color .2s ease, transform .15s ease;color:var(--text);}
+    .theme-toggle:hover{transform:translateY(-1px)}
+    .theme-toggle svg{width:18px;height:18px}
+    .theme-toggle:focus-visible{outline:var(--ring)}
+    .hero{padding:96px 20px 64px;background:linear-gradient(90deg,#eef6ff,#f4efff);position:relative;overflow:hidden;}
+    .hero::before,.hero::after{content:"";position:absolute;border-radius:9999px;filter:blur(60px);opacity:.55;z-index:0;pointer-events:none;}
+    .hero::before{width:320px;height:320px;background:radial-gradient(circle,#93c5fd,transparent 70%);top:-80px;left:-60px;}
+    .hero::after{width:360px;height:360px;background:radial-gradient(circle,#c4b5fd,transparent 70%);bottom:-100px;right:-80px;}
+    .hero-wrap{position:relative;z-index:1;}
     .hero h1{ font-size:clamp(28px, 3.2vw + 8px, 44px); line-height:1.15; margin-bottom:6px }
     .hero-wrap{ display:grid; gap:56px; align-items:center }
     @media(min-width:1000px){ .hero-wrap{ grid-template-columns:300px 1fr } }
-    .avatar{justify-self:center;width:220px;height:220px;border-radius:9999px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 12px 30px rgba(2,6,23,.08)}
-    .avatar img{width:100%;height:100%;object-fit:cover}
-    .contact-card{margin:28px auto 18px;max-width:320px;padding:22px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .avatar{justify-self:center;width:220px;height:220px;border-radius:9999px;overflow:hidden;box-shadow:0 12px 30px rgba(2,6,23,.08);padding:4px;background:linear-gradient(135deg,#2563eb,#7c3aed)}
+    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:9999px;display:block;background:#fff}
+    .contact-card{margin:28px auto 18px;max-width:320px;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .contact-card h3{ font-size:clamp(18px, 1.1vw + 12px, 22px); line-height:1.2; margin:0 0 8px }
     .hero p{max-width:68ch;line-height:1.65;text-align: justify;text-justify: inter-word;}
     :root{ --icon-size: clamp(48px, 3.2vw, 64px); --icon-glyph: calc(var(--icon-size) * .52) }
     .icon-row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:20px }
-    .icon-btn{width:var(--icon-size); height:var(--icon-size); border-radius:9999px;display:inline-flex; align-items:center; justify-content:center;background:#fff; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(2,6,23,.06);transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;text-decoration:none;}
+    .icon-btn{width:var(--icon-size); height:var(--icon-size); border-radius:9999px;display:inline-flex; align-items:center; justify-content:center;background:var(--card); border:1px solid var(--border); box-shadow:0 2px 8px rgba(2,6,23,.06);transition:transform .15s ease, box-shadow .15s ease, filter .15s ease, background .25s ease;text-decoration:none;}
     .icon-btn:hover{ transform:translateY(-1px); filter:brightness(1.02); box-shadow:0 6px 18px rgba(2,6,23,.10) }
     .icon-btn svg{ width:var(--icon-glyph); height:var(--icon-glyph); color:#334155 }
     .icon-btn[data-brand="github"]:hover svg{ color:#0f172a }
     .icon-btn[data-brand="linkedin"]:hover svg{ color:#0a66c2 }
     .section{padding:64px 0}
+    #about{padding:56px 0}
+    #skills{padding:80px 16px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    #contact{padding:80px 16px;background:radial-gradient(circle at 30% 20%, rgba(37,99,235,.08), transparent 60%), radial-gradient(circle at 80% 80%, rgba(124,58,237,.08), transparent 60%);}
+    html.dark #contact{background:radial-gradient(circle at 30% 20%, rgba(96,165,250,.12), transparent 60%), radial-gradient(circle at 80% 80%, rgba(167,139,250,.12), transparent 60%);}
+    #contactPanel{background:rgba(255,255,255,.65);backdrop-filter:saturate(160%) blur(14px);border:1px solid rgba(255,255,255,.5);box-shadow:0 20px 45px rgba(2,6,23,.08);}
+    html.dark #contactPanel{background:rgba(17,24,39,.55);border-color:rgba(255,255,255,.08);}
     .section h2{font-size:26px;margin:8px 0 24px;position:relative;display:inline-block}
-    .section h2:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:rgba(2,6,23,.08)}
-    .card{background:#ffffff;border:1px solid rgba(2,6,23,.06);border-radius:16px;padding:18px;transition:transform .2s ease, box-shadow .2s ease}
-    .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(2,6,23,.10)}
+    .section h2:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;border-radius:2px;background:linear-gradient(90deg,#2563eb,#7c3aed)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease}
+    .card:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(2,6,23,.12), 0 0 0 1px rgba(37,99,235,.08);border-color:rgba(37,99,235,.15)}
     .card h3{margin:8px 0 6px;font-size:16px}
-    .card p{margin:0 0 10px;color:#334155;font-size:14px}
+    .card p{margin:0 0 10px;color:var(--muted);font-size:14px}
     .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
-    .tag{font-size:11px;padding:6px 8px;border-radius:999px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155}
+    .tag{font-size:11px;padding:6px 8px;border-radius:999px;background:var(--bg2);border:1px solid var(--border);color:var(--muted)}
+    #skills span.rounded-full{
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      border:1px solid transparent;
+    }
+    #skills span.rounded-full:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(37,99,235,.15);
+      border-color:rgba(37,99,235,.25);
+      background:linear-gradient(135deg,#eef6ff,#f4efff);
+    }
     .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(2,6,23,.08);background:#f8fafc;color:#0f172a;font-weight:600;text-decoration:none;transition:filter .15s ease, transform .15s ease;}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-weight:600;text-decoration:none;transition:filter .15s ease, transform .15s ease, box-shadow .15s ease, background .25s ease;}
     .btn:hover{filter:brightness(1.02);transform:translateY(-1px)}
+    a.btn[href*="huggingface.co"], a.btn[href*="app.powerbi.com"]{
+      background:linear-gradient(135deg,#2563eb,#7c3aed);
+      color:#ffffff;
+      border-color:transparent;
+      box-shadow:0 6px 16px rgba(99,102,241,.30);
+    }
+    a.btn[href*="huggingface.co"]:hover, a.btn[href*="app.powerbi.com"]:hover{
+      filter:brightness(1.08);
+      box-shadow:0 10px 22px rgba(99,102,241,.40);
+    }
     .btn:focus-visible,.icon-btn:focus-visible{outline:var(--ring);text-decoration:none;}
-    .panel{background:#ffffff;border:1px solid rgba(2,6,23,.06);border-radius:16px;padding:20px}
-    .muted{color:#475569}
-    .footer{padding:30px 0;color:#475569;border-top:1px solid rgba(2,6,23,.06);margin-top:40px}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;transition:background .25s ease, border-color .25s ease}
+    .muted{color:var(--muted)}
+    .footer{padding:30px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:40px}
     .grid-projects{display:grid;gap:20px}
     @media(min-width:768px){.grid-projects{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1100px){.grid-projects{grid-template-columns:repeat(3,1fr)}}
-    .thumb{width:100%;border-radius:12px;overflow:hidden;background:#f1f5f9;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9}
-    .thumb img{width:100%;height:100%;object-fit:cover}
+    .thumb{width:100%;border-radius:12px;overflow:hidden;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9}
+    .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+    .card:hover .thumb img{transform:scale(1.06)}
     .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 8px;position:relative;z-index:3}
-    .filter-chip{padding:8px 12px;border-radius:999px;border:1px solid #e2e8f0;background:#fff;color:#0f172a;font-weight:600;font-size:12px;cursor:pointer;transition: background .15s ease, color .15s ease,border-color .15s ease, transform .15s ease,box-shadow .15s ease;}
-    .filter-chip:hover, .filter-chip:focus-visible{background:#0ea5e9; color:#fff; border-color:#0ea5e9;transform:translateY(-1px); box-shadow:0 6px 16px rgba(14,165,233,.25);outline:none;}
-    .filter-chip.active{background:#0ea5e9; color:#fff; border-color:#0ea5e9;box-shadow:0 6px 16px rgba(14,165,233,.25);}
+    .filter-chip{padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:600;font-size:12px;cursor:pointer;transition: background .15s ease, color .15s ease,border-color .15s ease, transform .15s ease,box-shadow .15s ease;}
+    .filter-chip:hover, .filter-chip:focus-visible{background:linear-gradient(135deg,#2563eb,#7c3aed); color:#fff; border-color:transparent;transform:translateY(-1px); box-shadow:0 6px 18px rgba(99,102,241,.35);outline:none;}
+    .filter-chip.active{background:linear-gradient(135deg,#2563eb,#7c3aed); color:#fff; border-color:transparent;box-shadow:0 6px 18px rgba(99,102,241,.35);}
     .filter-chip.active:hover{ transform:none }
     .searchbox{display:flex;gap:8px;align-items:center;flex-basis:100%;margin-bottom:16px}
-    .searchbox input{border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;width:260px}
+    .searchbox input{border:1px solid var(--border);border-radius:12px;padding:10px 12px;width:260px;background:var(--card);color:var(--text)}
     .hidden-card{display:none !important}
-    .empty-state{padding:24px;border:1px dashed #e2e8f0;border-radius:12px;color:#64748b;text-align:center}
+    .empty-state{padding:24px;border:1px dashed var(--border);border-radius:12px;color:var(--muted);text-align:center}
     .hidden{display:none}
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important }
-      .card:hover, .icon-btn:hover{ transform:none !important }
-    }
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease;}
+    .reveal.is-visible{opacity:1;transform:none;}
     .modal-overlay{position:fixed; inset:0; background:rgba(2,6,23,.55);display:none; align-items:center; justify-content:center;z-index:50; padding:20px;}
     .modal-overlay.show{ display:flex; }
-    .modal{width:min(640px, 96vw); background:#fff; border-radius:16px;border:1px solid rgba(2,6,23,.08); box-shadow:0 24px 60px rgba(2,6,23,.35);overflow:hidden; transform:translateY(6px) scale(.98); opacity:0;transition:transform .18s ease, opacity .18s ease;}
+    .modal{width:min(640px, 96vw); background:var(--card); border-radius:16px;border:1px solid var(--border); box-shadow:0 24px 60px rgba(2,6,23,.35);overflow:hidden; transform:translateY(6px) scale(.98); opacity:0;transition:transform .18s ease, opacity .18s ease;}
     .modal-overlay.show .modal{ transform:none; opacity:1; }
-    .modal-head{display:flex; align-items:center; justify-content:space-between;padding:14px 18px; border-bottom:1px solid #eef2f7;}
+    .modal-head{display:flex; align-items:center; justify-content:space-between;padding:14px 18px; border-bottom:1px solid var(--border);}
     .modal-title{ font-weight:800; font-size:1.1rem; }
     .modal-close{border:none; background:transparent; cursor:pointer; line-height:0;border-radius:8px; padding:6px;}
-    .modal-close:hover{ background:#f1f5f9; }
+    .modal-close:hover{ background:var(--bg2); }
     .modal-body{ padding:16px 18px; }
-    .modal-hero{width:100%; aspect-ratio: 16/9; border-radius:12px; overflow:hidden;background:#f8fafc; border:1px solid #e2e8f0; margin-bottom:12px;display:flex; align-items:center; justify-content:center;}
+    .modal-hero{width:100%; aspect-ratio: 16/9; border-radius:12px; overflow:hidden;background:var(--bg2); border:1px solid var(--border); margin-bottom:12px;display:flex; align-items:center; justify-content:center;}
     .modal-hero img{ width:100%; height:100%; object-fit:cover; }
-    .modal-text{ color:#334155; line-height:1.6 }
+    .modal-text{ color:var(--muted); line-height:1.6 }
     .modal-actions{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap }
     .modal-actions .btn{ font-weight:700 }
   </style>
@@ -94,12 +153,18 @@
   <header>
     <div class="container nav">
       <a class="logo" href="#">SURYA</a>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <div style="display:flex;align-items:center;gap:18px">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
     </div>
   </header>
   <main class="container">
@@ -113,15 +178,21 @@
             <h3>Contacts</h3>
             <div class="contact-list space-y-2">
               <div class="flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.11 5.18 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.72c.12.86.33 1.7.63 2.5a2 2 0 0 1-.45 2.11L9 10a16 16 0 0 0 5 5l.67-1.28a2 2 0 0 1 2.11-.45c.8.3 1.64.51 2.5.63A2 2 0 0 1 22 16.92z" stroke="#0f172a"/></svg>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;flex-shrink:0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.11 5.18 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.72c.12.86.33 1.7.63 2.5a2 2 0 0 1-.45 2.11L9 10a16 16 0 0 0 5 5l.67-1.28a2 2 0 0 1 2.11-.45c.8.3 1.64.51 2.5.63A2 2 0 0 1 22 16.92z" stroke="#0f172a"/></svg>
+                </span>
                 <a href="tel:+628112279807">+62 811-2279-807</a>
               </div>
               <div class="flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 0l8 7 8-7" stroke="#0f172a"/></svg>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;flex-shrink:0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 0l8 7 8-7" stroke="#0f172a"/></svg>
+                </span>
                 <a href="mailto:s.dharma.putra.ds@gmail.com">s.dharma.putra.ds@gmail.com</a>
               </div>
               <div class="flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" stroke="#0f172a"/></svg>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;flex-shrink:0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" stroke="#0f172a"/></svg>
+                </span>
                 <span>Jakarta, Indonesia</span>
               </div>
             </div>
@@ -129,7 +200,7 @@
         </aside>
         <div>
           <h1>Surya Dharma Putra</h1>
-          <h3 style="margin:0 0 14px;font-weight:600;color:#1f2937">Data Scientist & Data Analyst</h3>
+          <h3 style="margin:0 0 14px;font-weight:600">Data Scientist & Data Analyst</h3>
           <p><p>I’m a sixth-semester Data Science student at Bina Nusantara University (BINUS University). I love working with data, from exploration to modeling, and turning insights into real outcomes. I have hands-on experience with machine learning, deep learning, SQL, Excel, and Power BI, while building projects across computer vision, forecasting, NLP, and LLMs. I’m currently seeking internship opportunities where I can keep learning and contribute through practical data projects.</p></p>
           <div class="icon-row">
             <a class="icon-btn" data-brand="github" href="https://github.com/SuryaDharmaPutraDS" target="_blank" aria-label="GitHub" title="GitHub">
@@ -138,7 +209,6 @@
             <a class="icon-btn" data-brand="linkedin" href="https://www.linkedin.com/in/surya-dharma-putra-54b43b1bb/" target="_blank" aria-label="LinkedIn" title="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1.01 1.82-2.07 3.75-2.07 4.01 0 4.75 2.64 4.75 6.07V21h-4v-5.3c0-1.26-.02-2.88-1.76-2.88-1.76 0-2.03 1.38-2.03 2.79V21H9z"/></svg>
             </a>
-            <!-- UPDATED: Resume icon now opens PDF in /assets/ -->
             <a class="icon-btn" href="./assets/Surya%20Dharma%20Putra-resume.pdf" target="_blank" aria-label="Resume (PDF)" title="Resume (PDF)">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -151,15 +221,15 @@
     </section>
     <section id="about" class="section">
       <h2>About</h2>
-      <div class="panel">
+      <div class="panel reveal">
         <p>I like finding patterns in data and turning them into clear visuals, usable tools, and practical insights. Right now, I’m building projects around <strong>NLP</strong> and <strong>LLMs</strong>, while also deepening my skills in <strong>Excel</strong> and <strong>Power BI</strong> for data analysis, dashboarding, and business reporting. I enjoy practical projects where data, models, and insights are easy to explain, visualize, and demo.</p>
       </div>
     </section>
-    <section id="skills" class="section" style="background:var(--bg2);border-top:1px solid rgba(2,6,23,.06);border-bottom:1px solid rgba(2,6,23,.06)">
+    <section id="skills" class="section">
       <div class="container">
         <h2 class="block text-center">Skills</h2>
-        <div class="mt-3 py-6">
-          <div class="flex flex-wrap justify-center gap-3">
+        <div class="mt-3 py-6 reveal">
+          <div class="flex flex-wrap gap-3">
             <span class="px-4 py-2 rounded-full bg-white text-slate-900 text-sm shadow">Python</span>
             <span class="px-4 py-2 rounded-full bg-white text-slate-900 text-sm shadow">R</span>
             <span class="px-4 py-2 rounded-full bg-white text-slate-900 text-sm shadow">SQL</span>
@@ -224,7 +294,7 @@
         </div>
       </div>
       <div class="grid-projects" id="projectGrid">
-        <div class="card project-card" data-tags="yolo, dl, opencv, huggingface, pytorch, live-demo" data-title="viadv2-yolov11">
+        <div class="card project-card reveal" data-tags="yolo, dl, opencv, huggingface, pytorch, live-demo" data-title="viadv2-yolov11">
           <div class="thumb"><img src="./assets/viadv2.jpg" alt="viadv2-yolov11 thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>viadv2-yolov11</h3>
           <p>YOLOv11 object detection on ViadV2 dataset.</p>
@@ -234,7 +304,7 @@
             <a class="btn" href="https://huggingface.co/spaces/SuryaDharmaPutraDS/object-detection-yolov11" target="_blank">Live Demo</a>
           </div>
         </div>
-        <div class="card project-card" data-tags="yolo, dl, opencv, ppe, huggingface, pytorch, live-demo" data-title="sh17-yolov11">
+        <div class="card project-card reveal" data-tags="yolo, dl, opencv, ppe, huggingface, pytorch, live-demo" data-title="sh17-yolov11">
           <div class="thumb"><img src="./assets/sh17.jpg" alt="sh17-yolov11 thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>sh17-yolov11</h3>
           <p>YOLOv11 PPE detection (SH17 dataset).</p>
@@ -244,49 +314,49 @@
             <a class="btn" href="https://huggingface.co/spaces/SuryaDharmaPutraDS/sh17-yolov11" target="_blank">Live Demo</a>
           </div>
         </div>
-        <div class="card project-card" data-tags="dl, gan, pytorch" data-title="pistachio-gan-pytorch">
+        <div class="card project-card reveal" data-tags="dl, gan, pytorch" data-title="pistachio-gan-pytorch">
           <div class="thumb"><img src="./assets/pistachio-gan.jpg" alt="pistachio-gan thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>pistachio-gan-pytorch</h3>
           <p>Generative Adversarial Network on Pistachio dataset.</p>
           <div class="tags"><span class='tag'>PyTorch</span><span class='tag'>GAN</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/pistachio-gan-pytorch" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="dl, keras, autoencoder" data-title="pistachio-autoencoder-keras">
+        <div class="card project-card reveal" data-tags="dl, keras, autoencoder" data-title="pistachio-autoencoder-keras">
           <div class="thumb"><img src="./assets/pistachio-autoencoder.jpg" alt="pistachio-autoencoder thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>pistachio-autoencoder-keras</h3>
           <p>Autoencoder anomaly detection for Pistachio defects.</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>Autoencoder</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/pistachio-autoencoder-keras" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="classic-ml, keras, ann, forecasting, regression, reports" data-title="energy-consumption-forecasting-keras">
+        <div class="card project-card reveal" data-tags="classic-ml, keras, ann, forecasting, regression, reports" data-title="energy-consumption-forecasting-keras">
           <div class="thumb"><img src="./assets/energy-keras.jpg" alt="energy-consumption-forecasting-keras thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>energy-consumption-forecasting-keras</h3>
           <p>Energy consumption forecasting (ANN, Keras).</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>ANN</span><span class='tag'>Forecasting</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/energy-consumption-forecasting" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="keras, lstm, forecasting, regression" data-title="air-quality-lstm-forecasting-keras">
+        <div class="card project-card reveal" data-tags="keras, lstm, forecasting, regression" data-title="air-quality-lstm-forecasting-keras">
           <div class="thumb"><img src="./assets/air-quality-lstm.jpg" alt="air-quality-lstm thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>air-quality-lstm-forecasting-keras</h3>
           <p>Air quality time-series forecasting with LSTM (Keras).</p>
           <div class="tags"><span class='tag'>Keras</span><span class='tag'>LSTM</span><span class='tag'>Forecasting</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/air-quality-lstm-forecasting-keras" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="app, classic-ml, sklearn" data-title="loan-approval-ml-app">
+        <div class="card project-card reveal" data-tags="app, classic-ml, sklearn" data-title="loan-approval-ml-app">
           <div class="thumb"><img src="./assets/loan-app.jpg" alt="loan-approval-ml-app thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>loan-approval-ml-app</h3>
           <p>Loan approval prediction — classic ML app.</p>
           <div class="tags"><span class='tag'>Scikit-learn</span><span class='tag'>App</span><span class='tag'>Classic ML</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/loan-approval-app" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="dl, cnn, pytorch" data-title="brain-tumor-mri-alexnet">
+        <div class="card project-card reveal" data-tags="dl, cnn, pytorch" data-title="brain-tumor-mri-alexnet">
           <div class="thumb"><img src="./assets/brain-tumor.jpg" alt="brain-tumor-mri-alexnet thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>brain-tumor-mri-alexnet</h3>
           <p>MRI brain tumor classification using AlexNet-style CNN.</p>
           <div class="tags"><span class='tag'>PyTorch</span><span class='tag'>CNN</span></div>
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/brain-tumor-mri-alexnet" target="_blank">View on GitHub</a></div>
         </div>
-        <div class="card project-card" data-tags="nlp, classic-ml, reports, sentiment-analysis" data-title="hsr-reviews-rating-prediction">
+        <div class="card project-card reveal" data-tags="nlp, classic-ml, reports, sentiment-analysis" data-title="hsr-reviews-rating-prediction">
   <div class="thumb">
     <img src="./assets/hsr-reviews-rating.jpg" alt="hsr-reviews-rating-prediction thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -301,7 +371,7 @@
     <a class="btn" href="https://github.com/SuryaDharmaPutraDS/hsr-reviews-rating-prediction" target="_blank">View on GitHub</a>
   </div>
 </div>
-        <div class="card project-card" data-tags="power-bi, dashboard, data-visualization, reports" data-title="car-sales-interactive-dashboard">
+        <div class="card project-card reveal" data-tags="power-bi, dashboard, data-visualization, reports" data-title="car-sales-interactive-dashboard">
   <div class="thumb">
     <img src="./assets/car-sales-dashboard.jpg" alt="car-sales-dashboard thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -316,7 +386,7 @@
     <a class="btn" href="https://app.powerbi.com/view?r=eyJrIjoiYmE0ZTMwNmEtYjRmMC00ZTU5LWFhMWEtYzQxZmY4NmY2NTM0IiwidCI6IjM0ODViOTYzLTgyYmEtNGE2Zi04MTBmLWI1Y2MyMjZmZjg5OCIsImMiOjEwfQ%3D%3D" target="_blank">View Dashboard</a>
   </div>
 </div>
-<div class="card project-card" data-tags="nlp, llm, text-mining, huggingface, indobert, summarization, reports" data-title="liputan6-extractive-summarization">
+<div class="card project-card reveal" data-tags="nlp, llm, text-mining, huggingface, indobert, summarization, reports" data-title="liputan6-extractive-summarization">
   <div class="thumb">
     <img src="./assets/liputan6-summarization.jpg" alt="liputan6-extractive-summarization thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -332,7 +402,7 @@
     <a class="btn" href="https://github.com/SuryaDharmaPutraDS/liputan6_extractive_summary" target="_blank">View on GitHub</a>
   </div>
 </div>
-<div class="card project-card" data-tags="nlp, llm, clustering" data-title="ai-education-indonesia-clustering">
+<div class="card project-card reveal" data-tags="nlp, llm, clustering" data-title="ai-education-indonesia-clustering">
   <div class="thumb">
     <img src="./assets/ai-education-clustering.jpg" alt="ai-education-indonesia-clustering thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -347,7 +417,7 @@
     <a class="btn" href="https://github.com/SuryaDharmaPutraDS/AI-in-Indonesian-Education" target="_blank">View on GitHub</a>
   </div>
 </div>
-<div class="card project-card" data-tags="nlp, text-mining, classic-ml, dl, lstm, keras, sentiment-analysis, reports" data-title="twitter-sentiment-classifier">
+<div class="card project-card reveal" data-tags="nlp, text-mining, classic-ml, dl, lstm, keras, sentiment-analysis, reports" data-title="twitter-sentiment-classifier">
   <div class="thumb">
     <img src="./assets/twitter-sentiment.jpg" alt="twitter-sentiment-classifier thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -362,7 +432,7 @@
     <a class="btn" href="https://github.com/SuryaDharmaPutraDS/twitter_sentiment_classifier" target="_blank">View on GitHub</a>
   </div>
 </div>
-<div class="card project-card" data-tags="nlp, llm, rag, huggingface, indobert, sentiment-analysis, text-mining, app, live-demo" data-title="indonesian-news-intelligence-apps">
+<div class="card project-card reveal" data-tags="nlp, llm, rag, huggingface, indobert, sentiment-analysis, text-mining, app, live-demo" data-title="indonesian-news-intelligence-apps">
   <div class="thumb">
     <img src="./assets/indonesian-news-intelligence.jpg" alt="indonesian-news-intelligence-apps thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';">
   </div>
@@ -381,7 +451,7 @@
     <a class="btn" href="https://huggingface.co/spaces/SuryaDharmaPutraDS/news-rag-apps" target="_blank">Live Demo</a>
   </div>
 </div>
-        <div class="card project-card" data-tags="classic-ml, reports, recommender-system" data-title="movie-recommender-system">
+        <div class="card project-card reveal" data-tags="classic-ml, reports, recommender-system" data-title="movie-recommender-system">
           <div class="thumb"><img src="./assets/movie-recommender.jpg" alt="movie-recommender-system thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>Movie Recommender System</h3>
           <p>Content-based and collaborative filtering recommender system for movies, with evaluation and reporting (PDF).</p>
@@ -394,7 +464,7 @@
             <a class="btn" href="https://github.com/SuryaDharmaPutraDS/movie-recommender-system" target="_blank">View on GitHub</a>
           </div>
         </div>
-        <div class="card project-card" data-tags="nlp, text-mining, in-progress" data-title="anime-reviews-text-mining-2020-2024">
+        <div class="card project-card reveal" data-tags="nlp, text-mining, in-progress" data-title="anime-reviews-text-mining-2020-2024">
           <div class="thumb"><img src="./assets/wip.jpg" alt="anime-reviews-text-mining thumbnail" loading="lazy" onerror="this.parentElement.textContent='No image';"></div>
           <h3>anime-reviews-text-mining-2020-2024</h3>
           <p>Jikan v4 reviews mining & summarization (in progress).</p>
@@ -402,17 +472,23 @@
           <div class="cta-row"><a class="btn" href="https://github.com/SuryaDharmaPutraDS/anime-reviews-text-mining-2020-2024" target="_blank">View on GitHub</a></div>
         </div>
       </div>
-      <div id="noResults" class="empty-state hidden">No projects match your filter/search.</div>
+      <div id="noResults" class="empty-state hidden">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin:0 auto 10px;opacity:.5">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M21 21l-3.5-3.5"/>
+        </svg>
+        <div>No projects match your filter/search.</div>
+      </div>
     </section>
     <section id="contact" class="section">
       <h2 class="block text-center">Contact</h2>
-      <div class="panel max-w-xl mx-auto text-center" id="contactPanel">
+      <div class="panel reveal" id="contactPanel">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-sm font-semibold">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Open to internship
         </div>
         <p class="muted mt-3">Based in <strong>Jakarta, Indonesia</strong>. Feel free to reach out for collaborations, internships, or part-time opportunities.</p>
-        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+        <div class="mt-4 flex flex-wrap items-center gap-3">
           <a class="btn !bg-indigo-600 !text-white hover:brightness-110" href="mailto:s.dharma.putra.ds@gmail.com">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 0l8 7 8-7" stroke="#ffffff"/></svg>
             Email me
@@ -421,7 +497,6 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.11 5.18 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.72c.12.86.33 1.7.63 2.5a2 2 0 0 1-.45 2.11L9 10a16 16 0 0 0 5 5l.67-1.28a2 2 0 0 1 2.11-.45c.8.3 1.64.51 2.5.63A2 2 0 0 1 22 16.92z" stroke="#ffffff"/></svg>
             Call me
           </a>
-          <!-- NEW: Resume button in Contact section -->
           <a class="btn !bg-slate-700 !text-white hover:brightness-110" href="./assets/Surya%20Dharma%20Putra-resume.pdf" target="_blank" aria-label="Open resume PDF">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#ffffff"/>
@@ -463,6 +538,34 @@
   </div>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    const revealEls = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      const revealObserver = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+      revealEls.forEach(el=>revealObserver.observe(el));
+    } else {
+      revealEls.forEach(el=>el.classList.add('is-visible'));
+    }
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIconSun = document.getElementById('themeIconSun');
+    const themeIconMoon = document.getElementById('themeIconMoon');
+    function syncThemeIcons(){
+      const isDark = document.documentElement.classList.contains('dark');
+      if(themeIconSun) themeIconSun.style.display = isDark ? 'none' : 'block';
+      if(themeIconMoon) themeIconMoon.style.display = isDark ? 'block' : 'none';
+    }
+    syncThemeIcons();
+    if(themeToggle){
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        try{ localStorage.setItem('theme', isDark ? 'dark' : 'light'); }catch(e){}
+        syncThemeIcons();
+      });
+    }
     const headerEl = document.querySelector('header');
     function setHeaderShadow(){ headerEl.classList.toggle('scrolled', window.scrollY > 8); }
     window.addEventListener('scroll', setHeaderShadow, {passive:true}); setHeaderShadow();
